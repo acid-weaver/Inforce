@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 from polls.models import Restaurant, Menu, Vote
 from polls.serializers import (RestaurantSerializer,
@@ -12,20 +13,24 @@ from polls.serializers import (RestaurantSerializer,
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.order_by('id')
     serializer_class = RestaurantSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class MenuViewSet(ModelViewSet):
     queryset = Menu.objects.order_by('date')
     serializer_class = MenuSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class VoteViewSet(ModelViewSet):
     queryset = Vote.objects.order_by('menu')
     serializer_class = VoteSerializer
+    permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['GET'])
     def today_menu(self, request):
         menus = Menu.objects.today_results()
+
         max_votes = -1
         winner = None
         for menu in menus:

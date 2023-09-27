@@ -1,0 +1,6 @@
+.git
+__pycache__
+*_cache
+env
+dump.txt
+.coverage

@@ -95,3 +95,30 @@ def test_today_results(user):
         data_element = {"id": element['id'], "result": element['result']}
         assert data_element in data
     assert len(response.data) == len(data)
+
+
+def test_aninimous_user_no_access(client):
+    url = reverse("today-results")
+    response = client.get(url)
+
+    assert response.status_code == 401
+
+    url = reverse("today-menu")
+    response = client.get(url)
+
+    assert response.status_code == 401
+
+    url = reverse("menu-list")
+    response = client.get(url)
+
+    assert response.status_code == 401
+
+    url = reverse("restaurant-list")
+    response = client.get(url)
+
+    assert response.status_code == 401
+
+    url = reverse("vote-list")
+    response = client.get(url)
+
+    assert response.status_code == 401

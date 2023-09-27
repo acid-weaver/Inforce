@@ -15,7 +15,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
         name = validated_data.get('name', '')
         address = validated_data.get('address', '')
 
-        # IsAuthenticated permission is default (settings.py in backend)
+        # IsAuthenticated permission grants created_by not AnonimousUser
         created_by = self.context['request'].user
         created_by = User.objects.get(username=created_by)
 
